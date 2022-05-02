@@ -154,10 +154,12 @@ public class ImageCarouselViewController:UIPageViewController, ImageViewerTransi
         addBackgroundView()
         addNavBar()
         applyOptions()
-        
-        dataSource = self
 
         if let imageDatasource = imageDatasource {
+            // if there's only one image, don't set dataSource to disable the swipe gesture on UIPageViewController
+            if imageDatasource.numberOfImages() > 1 {
+                dataSource = self
+            }
             let initialVC:ImageViewerController = .init(
                 index: initialIndex,
                 imageItem: imageDatasource.imageItem(at: initialIndex),
